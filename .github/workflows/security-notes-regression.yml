@@ -1,0 +1,25 @@
+name: Security regression runtime test
+
+on:
+  push:
+    branches:
+      - security/notes-cross-publisher-regression
+
+permissions:
+  contents: read
+
+jobs:
+  notes-authorization:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.2"
+          bundler-cache: true
+      - name: Configure SQLite
+        run: cp config/database.yml.sqlite config/database.yml
+      - name: Prepare database
+        run: bundle exec rake db:create db:migrate
+      - name: Run cross-publisher authorization regression tests
+        run: bundle exec rspec spec/controllers/admin/notes_authorization_regression_spec.rb
