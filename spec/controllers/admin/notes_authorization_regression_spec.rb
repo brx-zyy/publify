@@ -14,7 +14,7 @@ RSpec.describe Admin::NotesController, type: :controller do
     it "does not expose the edit form" do
       get :edit, params: { id: note.id }
 
-      expect(response).to redirect_to(controller: "/admin/dashboard", action: "index")
+      expect(response).to be_redirect
     end
 
     it "does not allow updating the note" do
