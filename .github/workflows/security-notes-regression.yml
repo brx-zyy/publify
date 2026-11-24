@@ -22,4 +22,4 @@ jobs:
       - name: Prepare database
         run: bundle exec rake db:create db:migrate
       - name: Run cross-publisher authorization regression tests
-        run: bundle exec rspec spec/controllers/admin/notes_authorization_regression_spec.rb
+        run: bundle exec rspec spec/controllers/admin/notes_controller_authorization_regression_spec.rb
