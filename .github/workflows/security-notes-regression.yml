@@ -6,7 +6,7 @@ on:
       - security/notes-cross-publisher-regression
   pull_request:
     branches:
-      - main
+      - master
 
 permissions:
   contents: read
