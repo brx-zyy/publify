@@ -1,0 +1,28 @@
+name: Security positive PoC - cross-publisher notes
+
+on:
+  push:
+    branches:
+      - security/notes-cross-publisher-regression
+  pull_request:
+    branches:
+      - master
+
+permissions:
+  contents: read
+
+jobs:
+  notes-authorization-poc:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.2"
+          bundler-cache: true
+      - name: Configure SQLite
+        run: cp config/database.yml.sqlite config/database.yml
+      - name: Prepare database
+        run: bundle exec rake db:create db:migrate
+      - name: Run positive cross-publisher PoC
+        run: bundle exec rspec spec/controllers/admin/notes_controller_authorization_poc_spec.rb
